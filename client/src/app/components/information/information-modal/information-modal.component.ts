@@ -18,21 +18,29 @@ export class InformationModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.id_information) {
+      this._spinner.show();
+      axios.get(`/api/information/${this.id_information}`).then(({ data }) => {
+        this.modal = data;
+        this._spinner.hide();
+      }).catch(() => toastr.error('Eroare la preluarea informației!'));
+    }
   }
 
   save(): void {
     this._spinner.show();
-    toastr.success('ASD')
 
     if (!this.id_information) {
       axios.post('/api/information', this.modal).then(() => {
         this._spinner.hide();
         toastr.success('Informația a fost salvată cu succes!');
+        this.activeModal.close();
       }).catch(() => toastr.error('Eroare la salvarea informației!'));
     } else {
       axios.put('/api/information', this.modal).then(() => {
         this._spinner.hide();
         toastr.success('Informația a fost modificată cu succes!');
+        this.activeModal.close();
       }).catch(() => toastr.error('Eroare la modificarea informației!'));
     }
   }

@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { faChevronUp, faPlus, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEdit, faTrashAlt, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { SCROLL_TOP, SET_HEIGHT } from 'src/app/utils/utils-table';
 import { InformationModalComponent } from './information-modal/information-modal.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { toastr } from '../toastr/toastr.component';
 
 @Component({
   selector: 'app-information',
@@ -14,7 +15,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 })
 export class InformationComponent implements OnInit {
   faTrashAlt = faTrashAlt; faEdit = faEdit; faChevronUp = faChevronUp; faPlus = faPlus;
-  limit: number = window.innerHeight / 30; showBackTop: string = '';
+  limit: number = 70; showBackTop: string = '';
   informations: any = [];
 
   constructor(private _modal: NgbModal, private _spinner: NgxSpinnerService) { SET_HEIGHT('view', 20, 'height'); }
@@ -45,6 +46,7 @@ export class InformationComponent implements OnInit {
     modalRef.componentInstance.content = `<p class='text-center mt-1 mb-1'>Doriți să ștergeți informația având tipul <b>${information.type}</b>, denumirea: <b>${information.name}</b>?`;
     modalRef.closed.subscribe(() => {
       axios.delete(`/api/information/${information.id}`).then(() => {
+        toastr.success('Informația a fost ștearsă cu succes!');
         this.loadData();
       }).catch(() => toastr.error('Eroare la ștergerea informației!'));
     });
@@ -68,6 +70,6 @@ export class InformationComponent implements OnInit {
 
   onScrollTop(): void {
     SCROLL_TOP('view-scroll-informations', 0);
-    this.limit = window.innerHeight / 30;
+    this.limit = 70;
   }
 }

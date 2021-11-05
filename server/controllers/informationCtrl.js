@@ -13,8 +13,9 @@ module.exports = db => {
     },
 
     findAll: (req, res) => {
-      db.query(`SELECT name, type, CASE WHEN liked IS TRUE THEN 'Da' ELSE 'Nu' END AS liked
-      FROM "Information"`, { type: db.QueryTypes.SELECT }).then(resp => {
+      db.query(`SELECT id, name, type, CASE WHEN liked IS TRUE THEN 'Da' ELSE 'Nu' END AS liked
+      FROM "Information"
+      ORDER BY id`, { type: db.QueryTypes.SELECT }).then(resp => {
         res.send(resp);
       }).catch(() => res.status(401));
     },

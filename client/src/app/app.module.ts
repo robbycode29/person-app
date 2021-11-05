@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TooltipModule, TooltipOptions } from 'ng2-tooltip-directive';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -38,6 +39,7 @@ const DefaultTooltipOptions: TooltipOptions = {
     NgSelectModule,
     InfiniteScrollModule,
     TooltipModule.forRoot(DefaultTooltipOptions as TooltipOptions),
+    FontAwesomeModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

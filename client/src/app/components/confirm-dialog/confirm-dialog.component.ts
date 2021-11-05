@@ -9,8 +9,8 @@ export class ConfirmDialogComponent implements OnInit {
   _confirmButtonText: string = 'Da';
   _closeButtonText: string = 'Nu';
 
-  @Input() title: any;
-  @Input() content: any;
+  @Input() title?: string;
+  @Input() content?: string;
   @Input() confirmButtonText?: string;
   @Input() closeButtonText?: string;
   @Input() hideConfirmBtn!: boolean;
