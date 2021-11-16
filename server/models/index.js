@@ -30,7 +30,7 @@ module.exports = function getModels(sequelize, Sequelize) {
 
   const arr = [
     /************************ Information *********************/
-    {path: __dirname + '/information.js', sync: false},
+    {path: __dirname + '/information.js', sync: true},
   ];
 
   const syncTables = [];
