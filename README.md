@@ -107,6 +107,7 @@
     * La apăsarea butonului adaugă, persoana va fi salvată în baza de date
     * La apăsarea butonului renunță, modalul se va inchide fără a fi făcută salvarea
     * După ce persoana a fost salvată, tabelul trebuie să conțină noua persoană
+    * Filtrare pe tabel (sa se pastreze datele liniilor filtrate)
 
 ### Componenta mașini
 1. Un tabel ce va conține următoarele coloane
@@ -136,6 +137,7 @@
     * La apăsarea butonului adaugă, mașina va fi salvată în baza de date
     * La apăsarea butonului renunță, modalul se va inchide fără a fi făcută salvarea
     * După ce mașina a fost salvată, tabelul trebuie să conțină noua mașină
+    * Filtrare pe tabel (sa se pastreze datele liniilor filtrate)
 
 #### *BACK END*
 1. Create / update / find / findAll / destroy în tabelul Person
