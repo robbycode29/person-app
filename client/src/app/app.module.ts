@@ -15,6 +15,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { InformationComponent } from './components/information/information.component';
 import { InformationModalComponent } from './components/information/information-modal/information-modal.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { PersoaneComponent } from './components/persoane/persoane.component';
+import { PersoaneModalComponent } from './components/persoane/persoane-modal/persoane-modal.component';
+import { MasiniComponent } from './components/masini/masini.component';
+import { MasiniModalComponent } from './components/masini/masini-modal/masini-modal.component';
 
 const DefaultTooltipOptions: TooltipOptions = {
   'hide-delay': 0
@@ -26,7 +30,11 @@ const DefaultTooltipOptions: TooltipOptions = {
     HeaderComponent,
     InformationComponent,
     InformationModalComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    PersoaneComponent,
+    PersoaneModalComponent,
+    MasiniComponent,
+    MasiniModalComponent
   ],
   imports: [
     BrowserModule,
