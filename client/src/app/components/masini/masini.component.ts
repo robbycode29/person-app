@@ -24,4 +24,21 @@ export class MasiniComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  showTopButton(): void {
+    if (document.getElementsByClassName('view-scroll-informations')[0].scrollTop > 500) {
+      this.showBackTop = 'show';
+    } else {
+      this.showBackTop = '';
+    }
+  }
+
+  onScrollDown(): void {
+    this.limit += 20;
+  }
+
+  onScrollTop(): void {
+    SCROLL_TOP('view-scroll-informations', 0);
+    this.limit = 70;
+  }
+
 }
