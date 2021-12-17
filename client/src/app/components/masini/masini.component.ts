@@ -1,4 +1,13 @@
+import axios from 'axios';
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { faPlus, faEdit, faTrashAlt, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { SCROLL_TOP, SET_HEIGHT } from 'src/app/utils/utils-table';
+import { MasiniModalComponent } from './masini-modal/masini-modal.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { toastr } from '../toastr/toastr.component';
+
 
 @Component({
   selector: 'app-masini',
@@ -6,6 +15,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./masini.component.scss']
 })
 export class MasiniComponent implements OnInit {
+  faTrashAlt = faTrashAlt; faEdit = faEdit; faChevronUp = faChevronUp; faPlus = faPlus;
+  limit: number = 70; showBackTop: string = '';
+  informations: any = [];
 
   constructor() { }
 
