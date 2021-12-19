@@ -13,7 +13,7 @@ module.exports = db => {
       },
   
       findAll: (req, res) => {
-        db.query(`SELECT id, Nume, Prenume, CNP, Varsta
+        db.query(`SELECT id, nume, prenume, cnp, varsta
         FROM "persoane"
         ORDER BY id`, { type: db.QueryTypes.SELECT }).then(resp => {
           res.send(resp);
@@ -21,7 +21,7 @@ module.exports = db => {
       },
   
       find: (req, res) => {
-        db.query(`SELECT id, Nume, Prenume, CNP, Varsta
+        db.query(`SELECT id, nume, prenume, cnp, varsta
         FROM "persoane"`, { type: db.QueryTypes.SELECT }).then(resp => {
           res.send(resp[0]);
         }).catch(() => res.status(401));

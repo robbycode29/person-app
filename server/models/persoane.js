@@ -1,15 +1,15 @@
 module.exports = (sequelize, DataType) => {
     let model = sequelize.define('Persoane', {
-      Nume: {
+      nume: {
           type: DataType.TEXT
       },
-      Prenume: {
+      prenume: {
           type: DataType.TEXT
       },
-      CNP: {
+      cnp: {
           type: DataType.TEXT
       },
-      Varsta: {
+      varsta: {
           type: DataType.INTEGER
       }
     }, {

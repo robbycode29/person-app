@@ -1,1 +1,32 @@
-<p>persoane-modal works!</p>
+<div class='modal-header'>
+    <h4 class='modal-title'>{{id_persoana ? 'Modificare' : 'Adăugare'}} persoana</h4>
+  </div>
+  
+  <div class='modal-body'>
+    <div class='row'>
+      <label class='col-2 control-label'>Nume*</label>
+      <div class='col-4'>
+        <input [(ngModel)]='modal.nume' class='form-control' placeholder='Nume...' maxlength='250' />
+      </div>
+      <label class='col-1 control-label'>Prenume*</label>
+      <div class='col-4'>
+        <input [(ngModel)]='modal.prenume' class='form-control' placeholder='Prenume...' maxlength='250' />
+      </div>
+    </div>
+  
+    <div class='row'>
+      <label class='col-2 control-label'>CNP*</label>
+      <div class='col-4'>
+        <input type='number' [(ngModel)]='modal.cnp' class='form-control' placeholder='CNP...' maxlength='13' />
+      </div>
+      <label class='col-1 control-label'>Varsta</label>
+      <div class='col-5'>
+        <input type='number' [(ngModel)]='modal.varsta' class="form-contro" placeholder='Varsta...' maxlength='3'/>
+      </div>
+    </div>
+  </div>
+  
+  <div class='modal-footer'>
+    <button type='button' class='btn btn-outline-dark' (click)='activeModal.dismiss()'>Renunță</button>
+    <button type='button' class='btn btn-success' (click)='save()'>Salvează</button>
+  </div>
