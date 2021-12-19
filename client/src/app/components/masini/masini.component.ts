@@ -17,11 +17,20 @@ import { toastr } from '../toastr/toastr.component';
 export class MasiniComponent implements OnInit {
   faTrashAlt = faTrashAlt; faEdit = faEdit; faChevronUp = faChevronUp; faPlus = faPlus;
   limit: number = 70; showBackTop: string = '';
-  informations: any = [];
+  masini: any = [];
 
-  constructor() { }
+  constructor(private _modal: NgbModal, private _spinner: NgxSpinnerService) { SET_HEIGHT('view', 20, 'height'); }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData = (): void => {
+    this._spinner.show();
+    axios.get('/api/masini').then(({ data }) => {
+      this.masini = data;
+      this._spinner.hide();
+    }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
   }
 
   showTopButton(): void {

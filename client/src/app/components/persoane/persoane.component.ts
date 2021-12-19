@@ -28,10 +28,30 @@ export class PersoaneComponent implements OnInit {
 
   loadData = (): void => {
     this._spinner.show();
-    axios.get('/api/information').then(({ data }) => {
+    axios.get('/api/persoane').then(({ data }) => {
       this.persoane = data;
       this._spinner.hide();
     }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
+  }
+
+  addEdit = (id_persoana?: number): void => {
+    const modalRef = this._modal.open(PersoaneModalComponent, {size: 'lg', keyboard: false, backdrop: 'static'});
+    modalRef.componentInstance.id_persoana = id_persoana;
+    modalRef.closed.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+  delete = (persoana: any): void => {
+    const modalRef = this._modal.open(ConfirmDialogComponent, {size: 'lg', keyboard: false, backdrop: 'static'});
+    modalRef.componentInstance.title = `Ștergere persoana`;
+    modalRef.componentInstance.content = `<p class='text-center mt-1 mb-1'>Doriți să ștergeți persoana având CNP <b>${persoana.cnp}</b>, numele: <b>${persoana.nume} ${persoana.prenume}</b>?`;
+    modalRef.closed.subscribe(() => {
+      axios.delete(`/api/persoana/${persoana.id}`).then(() => {
+        toastr.success('Persoana a fost ștearsă cu succes!');
+        this.loadData();
+      }).catch(() => toastr.error('Eroare la ștergerea informației!'));
+    });
   }
 
   showTopButton(): void {
