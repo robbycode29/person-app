@@ -33,6 +33,30 @@ export class MasiniComponent implements OnInit {
     }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
   }
 
+  addEdit = (id_masina?: number): void => {
+    const modalRef = this._modal.open(MasiniModalComponent, {size: 'lg', keyboard: false, backdrop: 'static'});
+    modalRef.componentInstance.id_masina = id_masina;
+    modalRef.closed.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+  delete = (masina: any): void => {
+    const modalRef = this._modal.open(ConfirmDialogComponent, {size: 'lg', keyboard: false, backdrop: 'static'});
+    modalRef.componentInstance.title = `Ștergere informație`;
+    modalRef.componentInstance.content = `<p class='text-center mt-1 mb-1'>Doriți să ștergeți masina având marca <b>${masina.marca}</b>, modelul: <b>${masina.modelul}</b>?`;
+    modalRef.closed.subscribe(() => {
+      axios.delete(`/api/masini/${masina.id}`).then(() => {
+        toastr.success('Informația a fost ștearsă cu succes!');
+        this.loadData();
+      }).catch(() => toastr.error('Eroare la ștergerea informației!'));
+    });
+  }
+
+  onResize(): void {
+    SET_HEIGHT('view', 20, 'height');
+  }
+
   showTopButton(): void {
     if (document.getElementsByClassName('view-scroll-informations')[0].scrollTop > 500) {
       this.showBackTop = 'show';

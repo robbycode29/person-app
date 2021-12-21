@@ -1,1 +1,40 @@
-<p>masini-modal works!</p>
+<div class='modal-header'>
+    <h4 class='modal-title'>{{id_masina ? 'Modificare' : 'Adăugare'}} masina</h4>
+  </div>
+  
+  <div class='modal-body'>
+    <div class='row'>
+      <label class='col-2 control-label'>Model*</label>
+      <div class='col-4'>
+        <input [(ngModel)]='modal.model' class='form-control' placeholder='Model...' maxlength='250' />
+      </div>
+      <label class='col-2 control-label'>Marca*</label>
+      <div class='col-4'>
+        <input [(ngModel)]='modal.marca' class='form-control' placeholder='Marca...' maxlength='250' />
+      </div>
+    </div>
+  
+    <div class='row'>
+      <label class='col-2 control-label'>Anul fabricatiei*</label>
+      <div class='col-4'>
+        <input [(ngModel)]='modal.an_fabricatie' class='form-control' placeholder='Anul fabricatiei...' maxlength='4' />
+      </div>
+      <label class='col-2 control-label'>Capacitate cilindrica</label>
+      <div class='col-4'>
+        <input [(ngModel)]='modal.cap_cilindrica' class="form-control" placeholder='Capacitate cilindrica...' maxlength='4'/>
+      </div>
+    </div>
+  
+
+    <div class='row'>
+        <label class='col-2 control-label'>Taxa impozit</label>
+        <div class='col-10'>
+        <input [(ngModel)]='modal.tx_imp' class='form-control' placeholder='Taxa impozit...' maxlength='4' />
+        </div>
+    </div>
+  </div>
+  
+  <div class='modal-footer'>
+    <button type='button' class='btn btn-outline-dark' (click)='activeModal.dismiss()'>Renunță</button>
+    <button type='button' class='btn btn-success' (click)='save()'>Salvează</button>
+  </div>

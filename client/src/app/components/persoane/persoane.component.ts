@@ -47,7 +47,7 @@ export class PersoaneComponent implements OnInit {
     modalRef.componentInstance.title = `Ștergere persoana`;
     modalRef.componentInstance.content = `<p class='text-center mt-1 mb-1'>Doriți să ștergeți persoana având CNP <b>${persoana.cnp}</b>, numele: <b>${persoana.nume} ${persoana.prenume}</b>?`;
     modalRef.closed.subscribe(() => {
-      axios.delete(`/api/persoana/${persoana.id}`).then(() => {
+      axios.delete(`/api/persoane/${persoana.id}`).then(() => {
         toastr.success('Persoana a fost ștearsă cu succes!');
         this.loadData();
       }).catch(() => toastr.error('Eroare la ștergerea informației!'));
