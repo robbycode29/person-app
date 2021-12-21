@@ -1,7 +1,7 @@
 <div class="col-12 mt-2 width-1220">
     <div class='row'>
       <div class='col-4'>
-        <button class='btn btn-primary btn-sm' type='button' >
+        <button class='btn btn-primary btn-sm' type='button' (click)='addEdit()'>
           <fa-icon [icon]='faPlus'></fa-icon> Adaugă
         </button>
       </div>
@@ -21,7 +21,7 @@
                 <th width='128px'>Anul fabricatiei</th>
                 <th width='128px'>Capacitate cilindrica</th>
                 <th width='128px'>Taxa de impozit</th>
-                <th rowspan='2' width='4px'></th>
+                <th rowspan='2' width='43px'></th>
               </tr>
               <tr>
                 <th><input class='form-control input-xs' placeholder='Căutare...'></th>
@@ -41,15 +41,19 @@
             </button>
             <table class='table table-hover table-striped table-bordered font-14 p-0'>
               <tbody>
-                <tr *ngFor='let r of masini.slice(0, limit)' class='cursor-pointer'>
-                  <td width='60px' class='text-center'>{{r.id}}</td>
-                  <td>{{r.marca}}</td>
-                  <!-- <td width='30px' (click)='addEdit(r.id)' class='text-center'>
+                <tr *ngFor='let r of masini.slice(0, limit)' (dblclick)='addEdit(r.id)' class='cursor-pointer'>
+                  <td width='100px' class='text-center'>{{r.id}}</td>
+                  <td width='216px'>{{r.marca}}</td>
+                  <td width='216px'>{{r.model}}</td>
+                  <td width='216px'>{{r.an_fabricatie}}</td>
+                  <td width='216px'>{{r.cap_cilindrica}}</td>
+                  <td width='216px'>{{r.tx_imp}}</td>
+                  <td width='30px' (click)='addEdit(r.id)' class='text-center'>
                     <fa-icon class='text-primary' [icon]='faEdit' tooltip='Modificare' placement='left'></fa-icon>
                   </td>
                   <td width='30px' (click)='delete(r)' class='text-center' >
                     <fa-icon class='text-danger' [icon]='faTrashAlt' tooltip='Ștergere' placement='left'></fa-icon>
-                  </td> -->
+                  </td>
                 </tr>
                 <tr colspan='15' *ngIf='!masini.length' class='text-center fw-bold'>
                   <td>Date inexistente!</td>

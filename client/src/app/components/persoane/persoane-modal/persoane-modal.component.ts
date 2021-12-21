@@ -20,7 +20,7 @@ export class PersoaneModalComponent implements OnInit {
   ngOnInit(): void {
     if (this.id_persoana) {
       this._spinner.show();
-      axios.get(`/api/persoana/${this.id_persoana}`).then(({ data }) => {
+      axios.get(`/api/persoane/${this.id_persoana}`).then(({ data }) => {
         this.modal = data;
         this._spinner.hide();
       }).catch(() => toastr.error('Eroare la preluarea informației!'));
@@ -31,13 +31,13 @@ export class PersoaneModalComponent implements OnInit {
     this._spinner.show();
 
     if (!this.id_persoana) {
-      axios.post('/api/persoana', this.modal).then(() => {
+      axios.post('/api/persoane', this.modal).then(() => {
         this._spinner.hide();
         toastr.success('Informația a fost salvată cu succes!');
         this.activeModal.close();
       }).catch(() => toastr.error('Eroare la salvarea informației!'));
     } else {
-      axios.put('/api/persoana', this.modal).then(() => {
+      axios.put('/api/persoane', this.modal).then(() => {
         this._spinner.hide();
         toastr.success('Informația a fost modificată cu succes!');
         this.activeModal.close();
