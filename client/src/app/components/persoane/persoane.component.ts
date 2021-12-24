@@ -18,7 +18,7 @@ export class PersoaneComponent implements OnInit {
   limit: number = 70; showBackTop: string = '';
   persoane: any = [];
   junctions: any = [];
-  private masini: any = [];
+  carowners: any = [];
 
   constructor(private _modal: NgbModal, private _spinner: NgxSpinnerService) { SET_HEIGHT('view', 20, 'height'); }
 
@@ -29,14 +29,54 @@ export class PersoaneComponent implements OnInit {
   loadData = (): void => {
     this._spinner.show();
     axios.get('/api/persoane').then(({ data }) => {
-      this.junctions = data;
+      this.makeUniqueEntries(data);
+      console.log(this.carowners)
+      this.makeCarOwners();
+      this._spinner.hide();
+    }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
+  }
+
+  makeUniqueEntries(data: any = []) {
+    this.junctions = data;
       for(let i = 0; i <= data.length-1; i++) {
         if(data[i-1] === undefined) this.persoane.push(data[i])
         else if(data[i].id_person === data[i-1].id_person) continue
         else this.persoane.push(data[i])
       }
-      this._spinner.hide();
-    }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
+  }
+
+  makeCarOwners(): void {
+    for(let i = 0; i<=this.persoane.length-1; i++) {
+      this.carowners.push({
+        id: this.persoane[i].id_person,
+        nume: this.persoane[i].nume,
+        prenume: this.persoane[i].prenume,
+        cnp: this.persoane[i].cnp,
+        varsta: this.persoane[i].varsta,
+        carsOwned: []
+      });
+      
+      for(let j = 0; j <= this.junctions.length; j++) {
+        if(this.persoane[i].id_person === this.junctions[j].id_person) {
+          this.carowners[i].carsOwned.push({
+          id_car: this.junctions[j].id_car,
+          marca: this.junctions[j].marca,
+          model: this.junctions[j].model,
+          an_fabricatie: this.junctions[j].an_fabricatie,
+          cap_cilindrica: this.junctions[j].cap_cilindrica,
+          tx_imp: this.junctions[j].tx_imp
+          });
+        }
+        else if (this.junctions[2*j+1] === undefined) {
+          console.log(this.junctions[2*j])
+          break
+        }
+        // else if (this.persoane[i].id_person !== this.junctions[j].id_person) continue;
+        console.log(`iteration: ${j}`)
+      }
+      console.log(`i iteration: ${i},  persoane[${i}] = ${this.persoane[i].id}`);
+      console.log(this.carowners)
+    }
   }
 
   addEdit = (id_persoana?: number): void => {
@@ -76,3 +116,5 @@ export class PersoaneComponent implements OnInit {
     this.limit = 70;
   }
 }
+
+
