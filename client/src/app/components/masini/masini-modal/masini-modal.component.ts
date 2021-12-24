@@ -8,7 +8,6 @@ import { toastr } from '../../toastr/toastr.component';
 @Component({
   selector: 'app-masini-modal',
   templateUrl: './masini-modal.component.html',
-  styleUrls: ['./masini-modal.component.scss']
 })
 export class MasiniModalComponent implements OnInit {
   @Input() id_masina: number | undefined;
