@@ -8,7 +8,6 @@ import { toastr } from '../../toastr/toastr.component';
 @Component({
   selector: 'app-persoane-modal',
   templateUrl: './persoane-modal.component.html',
-  styleUrls: ['./persoane-modal.component.scss']
 })
 export class PersoaneModalComponent implements OnInit {
   @Input() id_persoana: number | undefined;

@@ -12,13 +12,13 @@ import { toastr } from '../toastr/toastr.component';
 @Component({
   selector: 'app-persoane',
   templateUrl: './persoane.component.html',
-  styleUrls: ['./persoane.component.scss']
 })
 export class PersoaneComponent implements OnInit {
   faTrashAlt = faTrashAlt; faEdit = faEdit; faChevronUp = faChevronUp; faPlus = faPlus;
   limit: number = 70; showBackTop: string = '';
   persoane: any = [];
-
+  junctions: any = [];
+  private masini: any = [];
 
   constructor(private _modal: NgbModal, private _spinner: NgxSpinnerService) { SET_HEIGHT('view', 20, 'height'); }
 
@@ -29,7 +29,12 @@ export class PersoaneComponent implements OnInit {
   loadData = (): void => {
     this._spinner.show();
     axios.get('/api/persoane').then(({ data }) => {
-      this.persoane = data;
+      this.junctions = data;
+      data.forEach((element: any) => {
+        if(!(element in data))
+          this.persoane.push(element);
+      });
+      
       this._spinner.hide();
     }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
   }

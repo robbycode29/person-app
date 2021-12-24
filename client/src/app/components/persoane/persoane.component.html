@@ -65,7 +65,11 @@
                 <td width='128px' class='text-center'>{{r.cnp}}</td>
                 <td width='128px' class='text-center'>{{r.varsta}}</td>
 
-                <td width='128px' class='text-center'></td>
+                <td width='128px' class='text-center'>
+                  <tr *ngFor='let j of junctions.slice(0, limit)'>
+                    <td *ngIf='j.id_person === r.id'>j.marca</td>
+                  </tr>
+                </td>
                 <td width='128px' class='text-center'></td>
                 <td width='128px' class='text-center'></td>
                 <td width='128px' class='text-center'></td>

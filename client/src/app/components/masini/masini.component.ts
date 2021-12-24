@@ -12,7 +12,6 @@ import { toastr } from '../toastr/toastr.component';
 @Component({
   selector: 'app-masini',
   templateUrl: './masini.component.html',
-  styleUrls: ['./masini.component.scss']
 })
 export class MasiniComponent implements OnInit {
   faTrashAlt = faTrashAlt; faEdit = faEdit; faChevronUp = faChevronUp; faPlus = faPlus;
