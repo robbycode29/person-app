@@ -64,17 +64,31 @@
                 <td width='128px' class='text-center'>{{r.prenume}}</td>
                 <td width='128px' class='text-center'>{{r.cnp}}</td>
                 <td width='128px' class='text-center'>{{r.varsta}}</td>
-
                 <td width='128px' class='text-center'>
                   <tr *ngFor='let j of junctions.slice(0, limit)'>
-                    <td *ngIf='j.id_person === r.id'>j.marca</td>
-                    <!-- <td></td> -->
+                    <td width='128px' *ngIf='j.id_person === r.id'>{{j.marca}}</td>
                   </tr>
                 </td>
-                <td width='128px' class='text-center'></td>
-                <td width='128px' class='text-center'></td>
-                <td width='128px' class='text-center'></td>
-                <td width='128px' class='text-center'></td>
+                <td width='128px' class='text-center'>
+                  <tr *ngFor='let j of junctions.slice(0, limit)'>
+                    <td width='128px' *ngIf='j.id_person === r.id'>{{j.model}}</td>
+                  </tr>
+                </td>
+                <td width='128px' class='text-center'>
+                  <tr *ngFor='let j of junctions.slice(0, limit)'>
+                    <td width='128px' *ngIf='j.id_person === r.id'>{{j.an_fabricatie}}</td>
+                  </tr>
+                </td>
+                <td width='128px' class='text-center'>
+                  <tr *ngFor='let j of junctions.slice(0, limit)'>
+                    <td width='128px' *ngIf='j.id_person === r.id'>{{j.cap_cilindrica}}</td>
+                  </tr>
+                </td>
+                <td width='128px' class='text-center'>
+                  <tr *ngFor='let j of junctions.slice(0, limit)'>
+                    <td width='128px' *ngIf='j.id_person === r.id'>{{j.tx_imp}}</td>
+                  </tr>
+                </td>
                 <td width='30px' (click)='addEdit(r.id)' class='text-center'>
                   <fa-icon class='text-primary' [icon]='faEdit' tooltip='Modificare' placement='left'></fa-icon>
                 </td>
