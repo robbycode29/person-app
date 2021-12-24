@@ -13,6 +13,7 @@
   "author": "Popescu Tudor",
   "license": "ISC",
   "dependencies": {
+    "@ng-select/ng-select": "^8.1.1",
     "@types/node": "^16.11.6",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
