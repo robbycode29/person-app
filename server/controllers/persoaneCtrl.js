@@ -13,9 +13,10 @@ module.exports = db => {
       },
   
       findAll: (req, res) => {
-        db.query(`SELECT id, nume, prenume, cnp, varsta
-        FROM "Persoane"
-        ORDER BY id`, { type: db.QueryTypes.SELECT }).then(resp => {
+        db.query(`SELECT p.id, j.id_person, p.nume, p.prenume, p.cnp, p.varsta, m.marca, m.model, m.an_fabricatie, m.cap_cilindrica, m.tx_imp 
+        FROM "Persoane" p 
+        LEFT JOIN "Junction" j ON j.id_person = p.id
+        LEFT JOIN "Masini" m ON m.id = j.id_car`, { type: db.QueryTypes.SELECT }).then(resp => {
           res.send(resp);
         }).catch(() => res.status(401));
       },

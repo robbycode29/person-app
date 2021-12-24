@@ -30,11 +30,11 @@ export class PersoaneComponent implements OnInit {
     this._spinner.show();
     axios.get('/api/persoane').then(({ data }) => {
       this.junctions = data;
-      data.forEach((element: any) => {
-        if(!(element in data))
-          this.persoane.push(element);
-      });
-      
+      for(let i = 0; i <= data.length-1; i++) {
+        if(data[i-1] === undefined) this.persoane.push(data[i])
+        else if(data[i].id_person === data[i-1].id_person) continue
+        else this.persoane.push(data[i])
+      }
       this._spinner.hide();
     }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
   }
