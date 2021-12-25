@@ -11,7 +11,10 @@ import { toastr } from '../../toastr/toastr.component';
 })
 export class PersoaneModalComponent implements OnInit {
   @Input() id_persoana: number | undefined;
-
+  @Input() cars: [] | any;
+  
+  selected: any = [];
+  allcars: any = [];
   modal = {} as any;
 
   constructor(private _spinner: NgxSpinnerService, public activeModal: NgbActiveModal) { }
@@ -21,9 +24,21 @@ export class PersoaneModalComponent implements OnInit {
       this._spinner.show();
       axios.get(`/api/persoane/${this.id_persoana}`).then(({ data }) => {
         this.modal = data;
+        console.log(this.id_persoana, data)
         this._spinner.hide();
       }).catch(() => toastr.error('Eroare la preluarea informației!'));
     }
+    axios.get('/api/masini').then(({ data }) => {
+      this.allcars = data;
+    }).catch(() => toastr.error('Eroare la preluarea masinilor'))
+
+    this.addSelected(this.cars);
+  }
+
+  addSelected(arr: []) {
+    arr.forEach((element: { marca: string, model: string, an_fabricatie: string }) => {
+      this.selected.push(`${element.marca} ${element.model} ${element.an_fabricatie}`)    
+    });
   }
 
   save(): void {

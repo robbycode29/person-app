@@ -30,7 +30,6 @@ export class PersoaneComponent implements OnInit {
     this._spinner.show();
     axios.get('/api/persoane').then(({ data }) => {
       this.makeUniqueEntries(data);
-      console.log(this.carowners)
       this.makeCarOwners();
       this._spinner.hide();
     }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
@@ -46,42 +45,39 @@ export class PersoaneComponent implements OnInit {
   }
 
   makeCarOwners(): void {
-    for(let i = 0; i<=this.persoane.length-1; i++) {
-      this.carowners.push({
-        id: this.persoane[i].id_person,
-        nume: this.persoane[i].nume,
-        prenume: this.persoane[i].prenume,
-        cnp: this.persoane[i].cnp,
-        varsta: this.persoane[i].varsta,
+    this.persoane.forEach((persoana: { id: number; id_person: number; nume: string; prenume: string; cnp: string; varsta:number; }) => {
+      this.carowners[this.persoane.indexOf(persoana)] = {
+        id: persoana.id_person,
+        nume: persoana.nume,
+        prenume: persoana.prenume,
+        cnp: persoana.cnp,
+        varsta: persoana.varsta,
         carsOwned: []
-      });
-      
-      for(let j = 0; j <= this.junctions.length; j++) {
-        if(this.persoane[i].id_person === this.junctions[j].id_person) {
-          this.carowners[i].carsOwned.push({
-          id_car: this.junctions[j].id_car,
-          marca: this.junctions[j].marca,
-          model: this.junctions[j].model,
-          an_fabricatie: this.junctions[j].an_fabricatie,
-          cap_cilindrica: this.junctions[j].cap_cilindrica,
-          tx_imp: this.junctions[j].tx_imp
+      }
+           
+    });
+    this.junctions.forEach((car: { id: number; id_car: number; marca: string; model: string; an_fabricatie: number; cap_cilindrica: number; tx_imp: number; }) => {
+      this.carowners.forEach((carowner: { carsOwned: any[]; id: number; }) => {
+        if(carowner.id === car.id) {
+          carowner.carsOwned.push({
+            id_car: car.id_car,
+            marca: car.marca,
+            model: car.model,
+            an_fabricatie: car.an_fabricatie,
+            cap_cilindrica: car.cap_cilindrica,
+            tx_imp: car.tx_imp
           });
         }
-        else if (this.junctions[2*j+1] === undefined) {
-          console.log(this.junctions[2*j])
-          break
-        }
-        // else if (this.persoane[i].id_person !== this.junctions[j].id_person) continue;
-        console.log(`iteration: ${j}`)
-      }
-      console.log(`i iteration: ${i},  persoane[${i}] = ${this.persoane[i].id}`);
-      console.log(this.carowners)
-    }
+        else return
+      });
+    });
+
   }
 
-  addEdit = (id_persoana?: number): void => {
+  addEdit = (id_persoana?: number, id?: number): void => {
     const modalRef = this._modal.open(PersoaneModalComponent, {size: 'lg', keyboard: false, backdrop: 'static'});
     modalRef.componentInstance.id_persoana = id_persoana;
+    modalRef.componentInstance.cars = (id_persoana && id===0 || id) ? this.carowners[id].carsOwned: null;
     modalRef.closed.subscribe(() => {
       this.loadData();
     });
