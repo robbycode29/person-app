@@ -2,7 +2,7 @@
     <h4 class='modal-title'>{{id_persoana ? 'Modificare' : 'Adăugare'}} persoana</h4>
   </div>
   
-  <div class='modal-body'>
+  <div class='modal-body' style='padding-top: 30px; padding-bottom: 30px; height: 200px;'>
     <div class='row'>
       <label class='col-2 control-label'>Nume*</label>
       <div class='col-4'>
@@ -20,16 +20,18 @@
         <input [(ngModel)]='modal.cnp' class='form-control' placeholder='CNP...' maxlength='13' />
       </div>
       <label class='col-1 control-label'>Varsta</label>
-      <div class='col-5'>
+      <div class='col-4'>
         <input [(ngModel)]='modal.varsta' class="form-control" placeholder='Varsta...' maxlength='3'/>
       </div>
     </div>
 
     <div class='row'>
       <label class='col-2 control-label'>Masini</label>
-      <div class='col-4'>
-        <input class='form-control' placeholder='CNP...' maxlength='13' />
-      </div>
+      <ng-select class='col-9' [items]='allcars' [(ngModel)]='selected' bindLabel="marca" [multiple] = "true" placeholder="Alege masin(a/ile)..." appendTo="body">
+        <ng-option [value]="item.id" [disabled]="item.disabled" *ngFor="let item of allcars">
+          {{item.marca}} {{item.model}}
+        </ng-option>
+      </ng-select>
     </div>
   </div>
   
