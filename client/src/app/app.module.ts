@@ -19,6 +19,7 @@ import { PersoaneComponent } from './components/persoane/persoane.component';
 import { PersoaneModalComponent } from './components/persoane/persoane-modal/persoane-modal.component';
 import { MasiniComponent } from './components/masini/masini.component';
 import { MasiniModalComponent } from './components/masini/masini-modal/masini-modal.component';
+import { DatePipe } from '@angular/common';
 
 const DefaultTooltipOptions: TooltipOptions = {
   'hide-delay': 0
@@ -50,7 +51,7 @@ const DefaultTooltipOptions: TooltipOptions = {
     FontAwesomeModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

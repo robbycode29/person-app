@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { REPLACE_DIACRITICS } from 'src/app/utils/utils-input';
 import { toastr } from '../../toastr/toastr.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-masini-modal',
@@ -14,9 +15,25 @@ export class MasiniModalComponent implements OnInit {
 
   modal = {} as any;
 
-  constructor(private _spinner: NgxSpinnerService, public activeModal: NgbActiveModal) { }
+  masiniForm: FormGroup | any;
+
+  constructor(private _spinner: NgxSpinnerService, public activeModal: NgbActiveModal, private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.masiniForm = this.fb.group({
+      marca: ['', [Validators.required]],
+      model: ['', [Validators.required]],
+      an_fabricatie: ['',[Validators.required]],
+      cap_cilindrica: ['',[Validators.required]],
+      tx_imp: '' 
+    })
+    const cap_cilindrica = this.masiniForm.get('cap_cilindrica')
+    const tx_imp = this.masiniForm.get('tx_imp')
+    cap_cilindrica.valueChanges.subscribe((value: number) => {
+      let tax = this.calcTaxes(value)
+      tx_imp.setValue(tax)
+    })
+
     if (this.id_masina) {
       this._spinner.show();
       axios.get(`/api/masini/${this.id_masina}`).then(({ data }) => {
@@ -24,6 +41,30 @@ export class MasiniModalComponent implements OnInit {
         this._spinner.hide();
       }).catch(() => toastr.error('Eroare la preluarea informației!'));
     }
+  }
+
+  get marca() {
+    return this.masiniForm.get('marca')
+  }
+  get model() {
+    return this.masiniForm.get('model')
+  }
+  get an_fabricatie() {
+    return this.masiniForm.get('an_fabricatie')
+  }
+  get cap_cilindrica() {
+    return this.masiniForm.get('cap_cilindrica')
+  }
+  get tx_imp() {
+    return this.masiniForm.get('tx_imp')
+  }
+
+  calcTaxes(cap: number) {
+    let tax
+    if(cap <= 1500) tax = 50
+    else if(cap > 1500 && cap <= 2000) tax = 100
+    else if(cap > 2000) tax = 200
+    return tax 
   }
 
   save(): void {
