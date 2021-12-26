@@ -47,12 +47,12 @@ export class PersoaneComponent implements OnInit {
 
   searchListByNume(searchString: any) {
     searchString.valueChanges.subscribe((value: string) => {
-      this.sresults = this.carowners.filter((carowner: Object | any) => carowner.nume.includes(value))
+      this.sresults = this.carowners.filter((carowner: Object | any) => carowner.nume.includes(value) || carowner.nume.toLowerCase().includes(value))
     })
   }
   searchListByPrenume(searchString: any) {
     searchString.valueChanges.subscribe((value: string) => {
-      this.sresults = this.carowners.filter((carowner: Object | any) => carowner.prenume.includes(value))
+      this.sresults = this.carowners.filter((carowner: Object | any) => carowner.prenume.includes(value) || carowner.prenume.toLowerCase().includes(value))
     })
   }
   searchListByCNP(searchString: any) {
