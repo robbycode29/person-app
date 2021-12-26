@@ -7,6 +7,7 @@ import { PersoaneModalComponent } from './persoane-modal/persoane-modal.componen
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { toastr } from '../toastr/toastr.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -19,11 +20,50 @@ export class PersoaneComponent implements OnInit {
   persoane: any = [];
   junctions: any = [];
   carowners: any = [];
+  sresults = this.carowners;
 
-  constructor(private _modal: NgbModal, private _spinner: NgxSpinnerService) { SET_HEIGHT('view', 20, 'height'); }
+  persoaneTable: FormGroup | any;
+
+  constructor(private _modal: NgbModal, private _spinner: NgxSpinnerService, private fb: FormBuilder) { SET_HEIGHT('view', 20, 'height'); }
 
   ngOnInit(): void {
     this.loadData();
+    this.persoaneTable = this.fb.group({
+      snume: '',
+      sprenume: '',
+      scnp: '',
+      svarsta: ''
+    })
+    const snume = this.persoaneTable.get('snume')
+    const sprenume = this.persoaneTable.get('sprenume')
+    const scnp = this.persoaneTable.get('scnp')
+    const svarsta = this.persoaneTable.get('svarsta')
+
+    this.searchListByNume(snume)
+    this.searchListByPrenume(sprenume)
+    this.searchListByCNP(scnp)
+    this.searchListByVarsta(svarsta)
+  }
+
+  searchListByNume(searchString: any) {
+    searchString.valueChanges.subscribe((value: string) => {
+      this.sresults = this.carowners.filter((carowner: Object | any) => carowner.nume.includes(value))
+    })
+  }
+  searchListByPrenume(searchString: any) {
+    searchString.valueChanges.subscribe((value: string) => {
+      this.sresults = this.carowners.filter((carowner: Object | any) => carowner.prenume.includes(value))
+    })
+  }
+  searchListByCNP(searchString: any) {
+    searchString.valueChanges.subscribe((value: string) => {
+      this.sresults = this.carowners.filter((carowner: Object | any) => carowner.cnp.includes(value))
+    })
+  }
+  searchListByVarsta(searchString: any) {
+    searchString.valueChanges.subscribe((value: number) => {
+      this.sresults = this.carowners.filter((carowner: Object | any) => carowner.varsta.toString().includes(value))
+    })
   }
 
   loadData = (): void => {
