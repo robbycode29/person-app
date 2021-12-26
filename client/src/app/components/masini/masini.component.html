@@ -1,4 +1,4 @@
-<div class="col-12 mt-2 width-1220">
+<form [formGroup]='masiniTable' class="col-12 mt-2 width-1220">
     <div class='row'>
       <div class='col-4'>
         <button class='btn btn-primary btn-sm' type='button' (click)='addEdit()'>
@@ -24,11 +24,11 @@
                 <th rowspan='2' width='43px'></th>
               </tr>
               <tr>
-                <th><input class='form-control input-xs' placeholder='Căutare...'></th>
-                <th><input class='form-control input-xs' placeholder='Căutare...'></th>
-                <th><input class='form-control input-xs' placeholder='Căutare...'></th>
-                <th><input class='form-control input-xs' placeholder='Căutare...'></th>
-                <th><input class='form-control input-xs' placeholder='Căutare...'></th>
+                <th><input formControlName='smarca' class='form-control input-xs' placeholder='Căutare...'></th>
+                <th><input formControlName='smodel' class='form-control input-xs' placeholder='Căutare...'></th>
+                <th><input formControlName='san_fab' class='form-control input-xs' placeholder='Căutare...'></th>
+                <th><input formControlName='scap_cil' class='form-control input-xs' placeholder='Căutare...'></th>
+                <th><input formControlName='stx_imp' class='form-control input-xs' placeholder='Căutare...'></th>
                 
               </tr>
             </thead>
@@ -63,4 +63,4 @@
           </div>
         </div>
     </div>
-</div>
+</form>
