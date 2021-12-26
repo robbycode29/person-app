@@ -1,40 +1,45 @@
-<div class='modal-header'>
+<form [formGroup]="masiniForm">
+  <div class='modal-header'>
     <h4 class='modal-title'>{{id_masina ? 'Modificare' : 'Adăugare'}} masina</h4>
   </div>
   
   <div class='modal-body'>
     <div class='row'>
       <label class='col-2 control-label'>Marca*</label>
-      <div class='col-4'>
-        <input [(ngModel)]='modal.marca' class='form-control' placeholder='Marca...' maxlength='250' />
-      </div>
+      <mat-form-field class='col-4'>
+        <input matInput placeholder="Marca" formControlName='marca' [(ngModel)]='modal.marca' class='form-control' maxlength='250' />
+        <mat-error *ngIf='marca.invalid && marca.touched' style='font-size: small; color: red'>Camp obligatoriu</mat-error>
+      </mat-form-field>
       <label class='col-2 control-label'>Model*</label>
-      <div class='col-4'>
-        <input [(ngModel)]='modal.model' class='form-control' placeholder='Model...' maxlength='250' />
-      </div>
+      <mat-form-field class='col-4'>
+        <input matInput placeholder="Model" formControlName='model' [(ngModel)]='modal.model' class='form-control' maxlength='250' />
+        <mat-error *ngIf='model.invalid && model.touched' style='font-size: small; color: red'>Camp obligatoriu</mat-error>
+      </mat-form-field>
     </div>
   
     <div class='row'>
       <label class='col-2 control-label'>Anul fabricatiei*</label>
-      <div class='col-4'>
-        <input [(ngModel)]='modal.an_fabricatie' class='form-control' placeholder='Anul fabricatiei...' maxlength='4' />
-      </div>
+      <mat-form-field class='col-4'>
+        <input matInput placeholder="Anul fabricatiei" formControlName='an_fabricatie' [(ngModel)]='modal.an_fabricatie' class='form-control' maxlength='4' />
+        <mat-error *ngIf='an_fabricatie.invalid && an_fabricatie.touched' style='font-size: small; color: red'>Camp obligatoriu</mat-error>
+      </mat-form-field>
       <label class='col-2 control-label'>Capacitate cilindrica</label>
-      <div class='col-4'>
-        <input [(ngModel)]='modal.cap_cilindrica' class="form-control" placeholder='Capacitate cilindrica...' maxlength='4'/>
-      </div>
+      <mat-form-field class='col-4'>
+        <input matInput placeholder="Capacitate cilindrica" formControlName='cap_cilindrica' [(ngModel)]='modal.cap_cilindrica' class="form-control" maxlength='4'/>
+        <mat-error *ngIf='cap_cilindrica.invalid && cap_cilindrica.touched' style='font-size: small; color: red'>Camp obligatoriu</mat-error>
+      </mat-form-field>
     </div>
-  
 
     <div class='row'>
         <label class='col-2 control-label'>Taxa impozit</label>
-        <div class='col-10'>
-        <input [(ngModel)]='modal.tx_imp' class='form-control' placeholder='Taxa impozit...' maxlength='4' />
-        </div>
+        <mat-form-field class='col-10'>
+        <input matInput placeholder="Taxa impozit" formControlName='tx_imp' readonly='true' [(ngModel)]='modal.tx_imp' class='form-control' maxlength='4' />
+        </mat-form-field>
     </div>
   </div>
   
   <div class='modal-footer'>
     <button type='button' class='btn btn-outline-dark' (click)='activeModal.dismiss()'>Renunță</button>
-    <button type='button' class='btn btn-success' (click)='save()'>Salvează</button>
+    <button type='button' class='btn btn-success' [disabled]="this.masiniForm.invalid" (click)='save()'>Salvează</button>
   </div>
+</form>  

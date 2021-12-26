@@ -1,41 +1,45 @@
-<div class='modal-header'>
+<form [formGroup]="persoaneForm">
+  <div class='modal-header'>
     <h4 class='modal-title'>{{id_persoana ? 'Modificare' : 'Adăugare'}} persoana</h4>
   </div>
-  
+
   <div class='modal-body' style='padding-top: 30px; padding-bottom: 30px; height: 200px;'>
     <div class='row'>
       <label class='col-2 control-label'>Nume*</label>
-      <div class='col-4'>
-        <input [(ngModel)]='modal.nume' class='form-control' placeholder='Nume...' maxlength='250' />
-      </div>
+      <mat-form-field class='col-4'>
+        <input matInput placeholder="Nume" formControlName='nume' [(ngModel)]='modal.nume' class='form-control' maxlength='250' />
+        <mat-error *ngIf='nume.invalid && nume.touched' style='font-size: small; color: red'>Camp obligatoriu</mat-error>
+      </mat-form-field>
       <label class='col-1 control-label'>Prenume*</label>
-      <div class='col-4'>
-        <input [(ngModel)]='modal.prenume' class='form-control' placeholder='Prenume...' maxlength='250' />
-      </div>
+      <mat-form-field class='col-4'>
+        <input matInput placeholder="Prenume" formControlName='prenume' [(ngModel)]='modal.prenume' class='form-control' maxlength='250' />
+        <mat-error *ngIf='prenume.invalid && prenume.touched' style='font-size: small; color: red'>Camp obligatoriu</mat-error>
+      </mat-form-field>
     </div>
   
     <div class='row'>
       <label class='col-2 control-label'>CNP*</label>
-      <div class='col-4'>
-        <input [(ngModel)]='modal.cnp' class='form-control' placeholder='CNP...' maxlength='13' />
-      </div>
+      <mat-form-field class='col-4'>
+        <input matInput placeholder="CNP" formControlName='cnp' [(ngModel)]='modal.cnp' class='form-control' maxlength='13' />
+        <mat-error *ngIf='cnp.invalid && cnp.touched' style='font-size: small; color: red'>Camp obligatoriu</mat-error>
+      </mat-form-field>
       <label class='col-1 control-label'>Varsta</label>
-      <div class='col-4'>
-        <input [(ngModel)]='modal.varsta' class="form-control" placeholder='Varsta...' maxlength='3'/>
-      </div>
+      <mat-form-field class='col-4'>
+        <input matInput placeholder="Varsta" formControlName='varsta' [(ngModel)]='modal.varsta' class="form-control" readonly='true' maxlength='3'/>
+      </mat-form-field>
     </div>
 
     <div class='row'>
       <label class='col-2 control-label'>Masini</label>
-      <ng-select class='col-9' [items]='allcars' [(ngModel)]='selected' bindLabel="marca" [multiple] = "true" placeholder="Alege masin(a/ile)..." appendTo="body">
+      <ng-select class='col-9' [items]='allcars' formControlName="cars" [(ngModel)]='selected' bindLabel="marca" [multiple] = "true" placeholder="Alege masin(a/ile)..." appendTo="body">
         <ng-option [value]="item.id" [disabled]="item.disabled" *ngFor="let item of allcars">
           {{item.marca}} {{item.model}}
         </ng-option>
       </ng-select>
     </div>
   </div>
-  
   <div class='modal-footer'>
     <button type='button' class='btn btn-outline-dark' (click)='activeModal.dismiss()'>Renunță</button>
-    <button type='button' class='btn btn-success' (click)='save()'>Salvează</button>
+    <button type='button' class='btn btn-success' (click)='save()' [disabled]="this.persoaneForm.invalid">Salvează</button>
   </div>
+</form>
