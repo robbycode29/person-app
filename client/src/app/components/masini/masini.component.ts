@@ -18,7 +18,7 @@ export class MasiniComponent implements OnInit {
   faTrashAlt = faTrashAlt; faEdit = faEdit; faChevronUp = faChevronUp; faPlus = faPlus;
   limit: number = 70; showBackTop: string = '';
   masini: any = [];
-  sresults = this.masini
+  sresults: any = [];
 
   masiniTable: FormGroup | any;
 
@@ -49,12 +49,12 @@ export class MasiniComponent implements OnInit {
   
   searchListByMarca(searchString: any) {
     searchString.valueChanges.subscribe((value: string) => {
-      this.sresults = this.masini.filter((masina: Object | any) => masina.marca.includes(value))
+      this.sresults = this.masini.filter((masina: Object | any) => masina.marca.includes(value) || masina.marca.toLowerCase().includes(value))
     })
   }
   searchListByModel(searchString: any) {
     searchString.valueChanges.subscribe((value: string) => {
-      this.sresults = this.masini.filter((masina: Object | any) => masina.model.includes(value))
+      this.sresults = this.masini.filter((masina: Object | any) => masina.model.includes(value) || masina.model.toLowerCase().includes(value))
     })
   }
   searchListByAn(searchString: any) {
@@ -77,6 +77,7 @@ export class MasiniComponent implements OnInit {
     this._spinner.show();
     axios.get('/api/masini').then(({ data }) => {
       this.masini = data;
+      this.sresults = data
       this._spinner.hide();
     }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
   }

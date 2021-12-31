@@ -41,7 +41,7 @@
             </button>
             <table class='table table-hover table-striped table-bordered font-14 p-0'>
               <tbody>
-                <tr *ngFor='let r of masini.slice(0, limit)' (dblclick)='addEdit(r.id)' class='cursor-pointer'>
+                <tr *ngFor='let r of sresults.slice(0, limit)' (dblclick)='addEdit(r.id)' class='cursor-pointer'>
                   <td width='100px' class='text-center'>{{r.id}}</td>
                   <td width='216px'>{{r.marca}}</td>
                   <td width='216px'>{{r.model}}</td>
