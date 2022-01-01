@@ -31,7 +31,7 @@
 
     <div class='row'>
       <label class='col-2 control-label'>Masini</label>
-      <ng-select class='col-9' [items]='allcars' formControlName="cars" [(ngModel)]='selected' bindLabel="marca" [multiple] = "true" placeholder="Alege masin(a/ile)..." appendTo="body">
+      <ng-select class='col-9' [items]='allcars' (change)="changeFn(selected)" formControlName="cars" [(ngModel)]='selected' bindLabel="marca" [multiple] = "true" placeholder="Alege masin(a/ile)..." appendTo="body">
         <ng-option [value]="item.id" [disabled]="item.disabled" *ngFor="let item of allcars">
           {{item.marca}} {{item.model}}
         </ng-option>

@@ -69,36 +69,29 @@ export class PersoaneComponent implements OnInit {
   loadData = (): void => {
     this._spinner.show();
     axios.get('/api/persoane').then(({ data }) => {
-      this.makeUniqueEntries(data);
-      this.makeCarOwners();
+      this.persoane = data;
+      axios.get('/api/persoane/cars').then(({data}) => {
+        this.junctions = data;
+        this.makeCarOwners(this.persoane, this.junctions);
+      })
       this._spinner.hide();
     }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
   }
 
-  makeUniqueEntries(data: any = []) {
-    this.junctions = data;
-      for(let i = 0; i <= data.length-1; i++) {
-        if(data[i-1] === undefined) this.persoane.push(data[i])
-        else if(data[i].id_person === data[i-1].id_person) continue
-        else this.persoane.push(data[i])
-      }
-  }
-
-  makeCarOwners(): void {
-    this.persoane.forEach((persoana: { id: number; id_person: number; nume: string; prenume: string; cnp: string; varsta:number; }) => {
+  makeCarOwners(persoane: { id: number; nume: string; prenume: string; cnp: string; varsta: number; }[], junctions: { id_person: number; id_car: number; id: number; marca: string; model: string; an_fabricatie: number; cap_cilindrica: number; tx_imp: number; }[]): void {
+    persoane.forEach((persoana: { id: number; nume: string; prenume: string; cnp: string; varsta: number; }) => {
       this.carowners[this.persoane.indexOf(persoana)] = {
-        id: persoana.id_person,
+        id: persoana.id,
         nume: persoana.nume,
         prenume: persoana.prenume,
         cnp: persoana.cnp,
         varsta: persoana.varsta,
         carsOwned: []
-      }
-           
+      }   
     });
-    this.junctions.forEach((car: { id: number; id_car: number; marca: string; model: string; an_fabricatie: number; cap_cilindrica: number; tx_imp: number; }) => {
+    junctions.forEach((car: { id_person: number; id_car: number; id: number, marca: string; model: string; an_fabricatie: number; cap_cilindrica: number; tx_imp: number; }) => {  
       this.carowners.forEach((carowner: { carsOwned: any[]; id: number; }) => {
-        if(carowner.id === car.id) {
+        if(carowner.id === car.id_person) {
           carowner.carsOwned.push({
             id_car: car.id_car,
             marca: car.marca,
@@ -111,7 +104,6 @@ export class PersoaneComponent implements OnInit {
         else return
       });
     });
-
   }
 
   addEdit = (id_persoana?: number, id?: number): void => {

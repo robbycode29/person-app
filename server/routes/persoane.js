@@ -7,6 +7,7 @@ module.exports = app => {
     router.post('/', persoaneCtrl.create);
     router.put('/', persoaneCtrl.update);
     router.get('/', persoaneCtrl.findAll);
+    router.get('/cars', persoaneCtrl.findAllCars);
     router.get('/:id', persoaneCtrl.find);
     router.delete('/:id', persoaneCtrl.destroy);
   
