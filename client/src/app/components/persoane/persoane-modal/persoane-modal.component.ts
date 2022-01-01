@@ -18,6 +18,7 @@ export class PersoaneModalComponent implements OnInit {
   selected: any = [];
   allcars: any = [];
   modal = {} as any;
+  reqbody = {} as any
 
   persoaneForm: FormGroup | any;
   currentDate = new Date();
@@ -49,7 +50,7 @@ export class PersoaneModalComponent implements OnInit {
       this._spinner.show();
       axios.get(`/api/persoane/${this.id_persoana}`).then(({ data }) => {
         this.modal = data;
-        console.log(this.id_persoana, data) //first arg: request made for person with id id_persoana, second arg: data returned
+        this.reqbody.person = data;
         this._spinner.hide();
       }).catch(() => toastr.error('Eroare la preluarea informației!'));
     }
@@ -85,16 +86,19 @@ export class PersoaneModalComponent implements OnInit {
   }
 
   addSelected(arr?: []) {
-    if(arr) arr.forEach((element: { marca: string, model: string, an_fabricatie: string }) => {
-      this.selected.push(`${element.marca} ${element.model} ${element.an_fabricatie}`)    
+    if(arr) arr.forEach((element: { id_car: number, marca: string, model: string, an_fabricatie: string }) => {
+      this.selected.push(element)    
     });
+  }
+  
+  changeFn(selection: any = []) {
+    this.reqbody.cars = selection
   }
 
   save(): void {
     this._spinner.show();
-
     if (!this.id_persoana) {
-      axios.post('/api/persoane', this.modal).then(() => {
+      axios.post('/api/persoane', this.reqbody).then(() => {
         this._spinner.hide();
         toastr.success('Informația a fost salvată cu succes!');
         this.activeModal.close();
