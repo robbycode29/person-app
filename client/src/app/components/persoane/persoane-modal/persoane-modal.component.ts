@@ -105,7 +105,7 @@ export class PersoaneModalComponent implements OnInit {
         this.activeModal.close();
       }).catch(() => toastr.error('Eroare la salvarea informației!'));
     } else {
-      axios.put('/api/persoane', this.modal).then(() => {
+      axios.put('/api/persoane', this.reqbody).then(() => {
         this._spinner.hide();
         toastr.success('Informația a fost modificată cu succes!');
         this.activeModal.close();

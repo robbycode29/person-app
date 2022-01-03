@@ -17,7 +17,18 @@ module.exports = db => {
       },
   
       update: (req, res) => {
-        db.models.Persoane.update(req.body, { where: { id: req.body.id } }).then(() => {
+        db.models.Persoane.update(req.body.person, { where: { id: req.body.person.id } }).then(() => {
+          db.query(`DELETE FROM "Junction" WHERE id_person = ${req.body.person.id}`, { type: db.QueryTypes.DELETE })
+          let junctions = []
+          req.body.cars.forEach(car => {
+            junctions.push({
+              id_person: req.body.person.id,
+              id_car: car.id
+            })
+          });
+          junctions.forEach(junction => {
+            db.models.Junction.create(junction).catch(() => res.status(401));
+          })
           res.send({ success: true })
         }).catch(() => res.status(401));
       },
