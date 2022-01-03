@@ -2,33 +2,37 @@ module.exports = db => {
     return {
       create: (req, res) => {
         db.models.Persoane.create(req.body.person).then(resp => {
-          let junctions = []
-          req.body.cars.forEach(car => {
-            junctions.push({
-              id_person: resp.id,
-              id_car: car.id
+          if(req.body.cars){
+            let junctions = []
+            req.body.cars.forEach(car => {
+              junctions.push({
+                id_person: resp.id,
+                id_car: car.id
+              })
+            });
+            junctions.forEach(junction => {
+              db.models.Junction.create(junction).catch(() => res.status(401));
             })
-          });
-          junctions.forEach(junction => {
-            db.models.Junction.create(junction).catch(() => res.status(401));
-          })
+          }
           res.send({ success: true });
         }).catch(() => res.status(401));
       },
   
       update: (req, res) => {
         db.models.Persoane.update(req.body.person, { where: { id: req.body.person.id } }).then(() => {
-          db.query(`DELETE FROM "Junction" WHERE id_person = ${req.body.person.id}`, { type: db.QueryTypes.DELETE })
-          let junctions = []
-          req.body.cars.forEach(car => {
-            junctions.push({
-              id_person: req.body.person.id,
-              id_car: car.id
+          if(req.body.cars) {
+            db.query(`DELETE FROM "Junction" WHERE id_person = ${req.body.person.id}`, { type: db.QueryTypes.DELETE })
+            let junctions = []
+            req.body.cars.forEach(car => {
+              junctions.push({
+                id_person: req.body.person.id,
+                id_car: car.id
+              })
+            });
+            junctions.forEach(junction => {
+              db.models.Junction.create(junction).catch(() => res.status(401));
             })
-          });
-          junctions.forEach(junction => {
-            db.models.Junction.create(junction).catch(() => res.status(401));
-          })
+          }
           res.send({ success: true })
         }).catch(() => res.status(401));
       },
