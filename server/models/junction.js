@@ -9,7 +9,7 @@ module.exports = (sequelize, DataType) => {
     }, {
       timestamps: true
     });
-    model.belongsTo(sequelize.models.Persoane, {foreignKey: 'id_person', onDelete: 'set null'});
-    model.belongsTo(sequelize.models.Masini, {foreignKey: 'id_car', onDelete: 'set null'});
+    model.belongsTo(sequelize.models.Persoane, {foreignKey: 'id_person', onDelete: 'cascade'});
+    model.belongsTo(sequelize.models.Masini, {foreignKey: 'id_car', onDelete: 'cascade'});
     return model;
   };
