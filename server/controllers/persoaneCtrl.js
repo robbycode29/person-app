@@ -1,36 +1,20 @@
 module.exports = db => {
     return {
       create: (req, res) => {
-        db.models.Persoane.create(req.body.person).then(() => {
-          let junctions = [];
+        db.models.Persoane.create(req.body.person).then(resp => {
+          let junctions = []
           req.body.cars.forEach(car => {
             junctions.push({
-              id_person: res.body.person.id,
+              id_person: resp.id,
               id_car: car.id
             })
           });
           junctions.forEach(junction => {
-            db.models.Junctions.create(junction).catch(() => res.status(401));
+            db.models.Junction.create(junction).catch(() => res.status(401));
           })
           res.send({ success: true });
         }).catch(() => res.status(401));
       },
-
-      // addCars: (req, res) => {
-      //   let junctions = [];
-      //   req.body.cars.forEach(car => {
-      //     junctions.push({
-      //       id_person: req.body.id,
-      //       id_car: car.id
-      //     })
-      //   });
-      //   console.log(junctions)
-      //   junctions.forEach(junction => {
-      //     db.models.Junctions.create(junction).then(() => {
-      //       res.send({ success: true });
-      //     }).catch(() => res.status(401));
-      //   })
-      // },
   
       update: (req, res) => {
         db.models.Persoane.update(req.body, { where: { id: req.body.id } }).then(() => {

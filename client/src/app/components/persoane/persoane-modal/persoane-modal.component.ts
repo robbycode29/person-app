@@ -18,7 +18,7 @@ export class PersoaneModalComponent implements OnInit {
   selected: any = [];
   allcars: any = [];
   modal = {} as any;
-  reqbody = {} as any
+  reqbody = {} as any;
 
   persoaneForm: FormGroup | any;
   currentDate = new Date();
@@ -98,6 +98,7 @@ export class PersoaneModalComponent implements OnInit {
   save(): void {
     this._spinner.show();
     if (!this.id_persoana) {
+      this.reqbody.person = this.modal
       axios.post('/api/persoane', this.reqbody).then(() => {
         this._spinner.hide();
         toastr.success('Informația a fost salvată cu succes!');
