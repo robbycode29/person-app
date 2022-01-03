@@ -27,7 +27,7 @@ export class PersoaneComponent implements OnInit {
   constructor(private _modal: NgbModal, private _spinner: NgxSpinnerService, private fb: FormBuilder) { SET_HEIGHT('view', 20, 'height'); }
 
   ngOnInit(): void {
-    this.loadData();
+    this.loadData()
     this.persoaneTable = this.fb.group({
       snume: '',
       sprenume: '',
@@ -65,18 +65,23 @@ export class PersoaneComponent implements OnInit {
       this.sresults = this.carowners.filter((carowner: Object | any) => carowner.varsta.toString().includes(value))
     })
   }
-
-  loadData = (): void => {
+  
+  dataLoader = async () => {
     this._spinner.show();
-    axios.get('/api/persoane').then(({ data }) => {
-      this.persoane = data;
-      axios.get('/api/persoane/cars').then(({data}) => {
-        this.junctions = data;
-        this.makeCarOwners(this.persoane, this.junctions);
-      })
+    const getPersoane = axios.get('/api/persoane')
+    const getCars = axios.get('/api/persoane/cars')
+    const requests = await Promise.all([getPersoane, getCars])
+    return requests
+  }
+
+  loadData = async () => {
+    await this.dataLoader().then(resp => {
+      this.persoane = resp[0].data
+      this.junctions = resp[1].data
+      this.makeCarOwners(this.persoane, this.junctions);
       this._spinner.hide();
     }).catch(() => toastr.error('Eroare la preluarea informațiilor!'));
-  }
+  } 
 
   makeCarOwners(persoane: { id: number; nume: string; prenume: string; cnp: string; varsta: number; }[], junctions: { id_person: number; id_car: number; id: number; marca: string; model: string; an_fabricatie: number; cap_cilindrica: number; tx_imp: number; }[]): void {
     persoane.forEach((persoana: { id: number; nume: string; prenume: string; cnp: string; varsta: number; }) => {
